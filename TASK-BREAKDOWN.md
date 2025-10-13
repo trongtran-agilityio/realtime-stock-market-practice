@@ -21,12 +21,12 @@ Initialize the Next.js app, set up UI framework, environment files, and prepare 
 
 **Tasks:**
 
-* [ ] Create project folder and initialize:
+* [x] Create project folder and initialize:
 
   ```bash
   npx create-next-app@latest realtime-stock-market --typescript
   ```
-* [ ] Install base dependencies:
+* [x] Install base dependencies:
   `tailwindcss`, `shadcn/ui`, `dotenv`, `axios`, `mongoose`.
 * [ ] Configure Tailwind CSS and setup shadcn/ui components.
 * [ ] Clean default Next.js boilerplate (remove demo files, update metadata).
