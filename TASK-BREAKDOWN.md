@@ -28,9 +28,9 @@ Initialize the Next.js app, set up UI framework, environment files, and prepare 
   ```
 * [x] Install base dependencies:
   `tailwindcss`, `shadcn/ui`, `dotenv`, `axios`, `mongoose`.
-* [ ] Configure Tailwind CSS and setup shadcn/ui components.
-* [ ] Clean default Next.js boilerplate (remove demo files, update metadata).
-* [ ] Create `.env.local` file and add placeholders for all environment variables.
+* [x] Configure Tailwind CSS and setup shadcn/ui components.
+* [x] Clean default Next.js boilerplate (remove demo files, update metadata).
+* [x] Create `.env` file and add placeholders for all environment variables.
 * [ ] **Create `/devops` folder** with local development setup
 * [ ] Verify MongoDB container runs and connects successfully from your local app.
 
