@@ -31,8 +31,14 @@ Initialize the Next.js app, set up UI framework, environment files, and prepare 
 * [x] Configure Tailwind CSS and setup shadcn/ui components.
 * [x] Clean default Next.js boilerplate (remove demo files, update metadata).
 * [x] Create `.env` file and add placeholders for all environment variables.
-* [ ] **Create `/devops` folder** with local development setup
-* [ ] Verify MongoDB container runs and connects successfully from your local app.
+* [x] **Create `/devops` folder** with local development setup
+* [x] Verify MongoDB container runs and connects successfully from your local app.
+
+Notes:
+- Start services: bash devops/start-all-services.sh
+- Stop services: bash devops/stop-all-services.sh
+- Local Mongo URI (pre-filled in .env): mongodb://appuser:apppass@localhost:27017/realtime_stock?authSource=admin
+- Mongo Express (UI): http://localhost:8081
 
 **Deliverables:**
 - ✅ Working Next.js base project
