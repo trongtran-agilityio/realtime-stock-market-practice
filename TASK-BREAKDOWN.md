@@ -54,10 +54,10 @@ Notes:
 
 **Tasks:**
 
-* [ ] Build global layout (`layout.tsx`) and header/navigation bar.
-* [ ] Include navigation links: Home, Stocks, Login, Register.
-* [ ] Style with Tailwind and shadcn/ui.
-* [ ] Ensure responsive layout (desktop/mobile views).
+* [x] Build global layout (`layout.tsx`) and header/navigation bar.
+* [x] Include navigation links: Dashboard, Search, Watchlist.
+* [x] Style with Tailwind and shadcn/ui.
+* [x] Ensure responsive layout (desktop/mobile views).
 
 **Deliverables:**
 - ✅ Shared layout and navigation implemented
