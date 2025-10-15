@@ -71,7 +71,7 @@ Notes:
 
 **Tasks:**
 
-* [ ] Create homepage with:
+* [x] Create homepage with:
 
   * Market summary section
   * Featured stocks list
