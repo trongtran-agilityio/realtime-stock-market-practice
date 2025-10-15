@@ -27,7 +27,8 @@ const SignUp = () => {
   })
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      console.log(data);
+      console.log("Form data submit: ", data);
+      //TODO: Not implement yet
     } catch (e) {
       console.error(e);
     }
