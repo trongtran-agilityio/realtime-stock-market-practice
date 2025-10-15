@@ -77,7 +77,7 @@ Notes:
   * Featured stocks list
   * Example chart component
 * [ ] Integrate **Finnhub API** for initial data (e.g., S&P500 index, trending symbols).
-* [ ] Implement chart visualization (using **Recharts** or **ApexCharts**).
+* [x] Implement chart visualization (using **Trading View widgets**).
 * [ ] Add loading, error, and empty states.
 * [ ] Make the page fully responsive.
 
@@ -93,8 +93,9 @@ Notes:
 
 **Tasks:**
 
-* [ ] Create **Sign Up** and **Sign In** pages using shadcn/ui components.
-* [ ] Build Auth layout (`app/(auth)/layout.tsx`) separate from main layout.
+* [x] Create **Sign Up** page using shadcn/ui components.
+* [ ] Create **Sign In** page using shadcn/ui components.
+* [x] Build Auth layout (`app/(auth)/layout.tsx`) separate from main layout.
 * [ ] Add input validation and error states.
 * [ ] Ensure seamless navigation between Auth and main pages.
 
