@@ -20,4 +20,4 @@ const InputField = ({ name, label, placeholder, type="text", register, error, va
     </div>
   )
 }
-export default InputField
+export default InputField;
