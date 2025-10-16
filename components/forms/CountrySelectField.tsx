@@ -121,9 +121,6 @@ const CountrySelectField = ({name, label, control, error, required = false}: Cou
         )}
       />
       {error && <p className="text-sm text-red-500">{error.message}</p>}
-      <p className="text-xs text-gray-500">
-        Helps us show market data & news relevant to you.
-      </p>
     </div>
   )
 };
