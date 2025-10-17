@@ -34,7 +34,15 @@ const SignUp = () => {
     try {
       // Call server action here
       const result = await signUpWithEmail(data);
-      if (result.success) router.push('/')
+
+      if (result?.success) {
+        router.replace('/');
+        router.refresh();
+      } else {
+        toast.error('Sign up failed', {
+          description: result?.error ?? 'Failed to sign up.'
+        })
+      }
 
     } catch (e) {
       console.error(e);
