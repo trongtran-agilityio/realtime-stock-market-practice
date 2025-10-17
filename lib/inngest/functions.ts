@@ -31,7 +31,8 @@ export const sendSignUpEmail = inngest.createFunction(
 
     await step.run('send-welcome-email', async  () => {
       const part = response.candidates?.[0]?.content?.parts?.[0];
-      const introText = (part && 'text' in part ? part.text : null) || 'Thanks for joining Signalist. You now have tools to track markets and make smatter moves.';
+      const defaultIntroText = 'Thanks for joining Signalist. You now have tools to track markets and make smatter moves.';
+      const introText = (part && 'text' in part ? part.text : null) || defaultIntroText;
 
       // Destructure data from event
       const { data: {email, name} } = event;
