@@ -4,6 +4,9 @@ import { getDateRange, validateArticle, formatArticle } from "@/lib/utils";
 
 const finnhubBaseUrl = process.env.FINNHUB_BASE_URL;
 const token = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
+if (!token) {
+  throw new Error('FINNHUB API key is not configured');
+}
 
 // Generic JSON fetcher with optional revalidation caching
 export async function fetchJSON<T>(url: string, revalidateSeconds?: number): Promise<T> {
