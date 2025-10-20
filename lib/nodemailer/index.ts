@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import {WELCOME_EMAIL_TEMPLATE} from "@/lib/nodemailer/templates";
+import {NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE} from "@/lib/nodemailer/templates";
 
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -23,4 +23,29 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
   };
 
   await transporter.sendMail(mailOptions);
+}
+
+export const sendNewsSummaryEmail = async ({ email, date, newsContent}: NewsSummaryEmailData ) => {
+  const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
+    .replace('{{newsContent}}', newsContent)
+    .replace('{{date}}', date);
+
+  const mailOptions = {
+    from: `"Signalist News" <${process.env.NODEMAILER_EMAIL}>`,
+    to: email,
+    subject: `[BGH] [Training] Market News Summary Today - ${date}`,
+    text: `Today's market news summary from Signalist.`,
+    html: htmlTemplate,
+  };
+
+  try {
+    console.log(`Sending daily news summary email to ${email}`);
+    const result = await transporter.sendMail(mailOptions);
+    console.log(`Daily news email sent successfully to ${email}:`, result.messageId);
+    return { success: true, messageId: result.messageId };
+
+  } catch (e) {
+    console.error(`Failed to send daily news email to ${email}`);
+    throw e;
+  }
 }

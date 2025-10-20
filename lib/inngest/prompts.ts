@@ -139,6 +139,9 @@ Content guidelines:
 - Keep language conversational and accessible to everyone
 - Prioritize BREVITY and CLARITY over detailed explanations
 
+FINALLY SUPPER IMPORTANT:
+- Rewrite the entire content into the language with the country code {{countryCode}}, for example country code is 'VN' then rewrite to Vietnamese, 'EN' then rewrite to English.
+
 Example structure:
 <h3 class="mobile-news-title dark-text" style="margin: 30px 0 15px 0; font-size: 20px; font-weight: 600; color: #f8f9fa; line-height: 1.3;">📊 Market Overview</h3>
 

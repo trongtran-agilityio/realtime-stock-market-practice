@@ -3,6 +3,8 @@
 import {auth} from "@/lib/better-auth/auth";
 import {inngest} from "@/lib/inngest/client";
 import {headers} from "next/headers";
+import {connectToDatabase} from "@/database/mongoose";
+import {updateCountryForUserEmail} from "@/lib/actions/user.actions";
 
 export const signUpWithEmail = async ({
                                         email,
@@ -24,6 +26,9 @@ export const signUpWithEmail = async ({
     // ----------------------------------
     // STEP 2: Trigger Inngest event
     if (response) {
+      // Customize insert country field into this user.
+      await updateCountryForUserEmail(email, country);
+
       await inngest.send({
         name: 'app/user.created',
         data: { email, name: fullName, country, investmentGoals, riskTolerance, preferredIndustry },
