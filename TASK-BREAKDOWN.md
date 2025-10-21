@@ -182,8 +182,8 @@ Notes:
 **Tasks:**
 
 * [ ] Implement `/api/search?q=` endpoint (Next.js API route).
-* [ ] Integrate **Finnhub API** to fetch symbol search results.
-* [ ] Build search UI with debounce + result dropdown.
+* [x] Integrate **Finnhub API** to fetch symbol search results.
+* [x] Build search UI with debounce + result dropdown.
 * [ ] Display company name, ticker, and logo.
 * [ ] Handle empty state and errors gracefully.
 
