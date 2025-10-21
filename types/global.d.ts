@@ -95,6 +95,18 @@ declare global {
   type StockWithWatchlistStatus = Stock & {
     isInWatchlist: boolean;
   }
+
+  type FinnhubSearchResult = {
+    symbol: string;
+    description: string;
+    displaySymbol?: string;
+    type: string;
+  };
+
+  type FinnhubSearchResponse = {
+    count: number;
+    result: FinnhubSearchResult[];
+  };
 }
 
 export { };

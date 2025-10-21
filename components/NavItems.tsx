@@ -34,7 +34,7 @@ const NavItems = () => {
             <SearchCommand
               renderAs="text"
               label="Search"
-              initialStocks={[{ symbol: 'TXT', name: 'TEXT', exchange: 'NASDAQ', type: 'TYPE' }]}
+              initialStocks={[]}
             />
           </li>
         );

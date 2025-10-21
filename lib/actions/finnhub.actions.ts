@@ -1,6 +1,7 @@
 'use server';
 
 import { getDateRange, validateArticle, formatArticle } from "@/lib/utils";
+import {cache} from "react";
 
 /**
  * Finnhub API Configuration
@@ -138,3 +139,88 @@ export async function getNews(symbols?: string[]): Promise<FormattedNewsArticle[
     throw new Error('Failed to fetch news');
   }
 }
+export async function getCompanyProfile(symbol: string): Promise<{ logo: string | null; name: string; country?: string; exchange?: string; marketCapitalization?: number; }> {
+  try {
+    const url = `${finnhubBaseUrl}/stock/profile2?symbol=${encodeURIComponent(symbol.toUpperCase())}&token=${token}`;
+    const profile = await fetchJSON<{
+      logo?: string;
+      name?: string;
+      country?: string;
+      exchange?: string;
+      marketCapitalization?: number;
+    }>(url, 3600); // Cache for 1 hour
+
+    return {
+      logo: profile.logo || null,
+      name: profile.name || symbol,
+      country: profile.country,
+      exchange: profile.exchange,
+      marketCapitalization: profile.marketCapitalization
+    };
+  } catch (error) {
+    console.error(`Error fetching company profile for ${symbol}:`, error);
+    return { logo: null, name: symbol };
+  }
+}
+
+export const searchStocks = cache(async (query?: string): Promise<StockWithWatchlistStatus[]> => {
+
+  const trimmed = typeof query === 'string' ? query.trim() : '';
+  let results: FinnhubSearchResult[] = [];
+  console.log('------ HERE 2');
+  try {
+    if (trimmed) {
+      const url = `${finnhubBaseUrl}/search?q=${trimmed}&token=${token}`;
+      const data = await fetchJSON<FinnhubSearchResponse>(url, 1800);
+      results = Array.isArray(data?.result) ? data.result : [];
+    }
+
+    // Fetch company profiles to have logos and official names
+    const profilePromises = results.slice(0, 15).map(async (item) => {
+      try {
+        const upperSymbol = (item.symbol || '').toUpperCase();
+        const profile = await getCompanyProfile(upperSymbol);
+        return {
+          result: item,
+          profile,
+          symbol: upperSymbol
+        }
+
+      } catch (error) {
+        console.error(`Error fetching company profile for ${item.symbol}:`, error);
+        return {
+          result: item,
+          profile: { logo: null, name: item.description || item.symbol || '' },
+          symbol: (item.symbol || '').toUpperCase()
+        }
+      }
+    });
+
+    const profiledResults = await Promise.all(profilePromises);
+
+    const mapped: StockWithWatchlistStatus[] = profiledResults
+      .map(({ result: r, profile, symbol: upper }) => {
+        const name = r.description || upper;
+        const exchangeFromDisplay = (r.displaySymbol as string | undefined) || undefined;
+        const exchangeFromProfile = (r as any).__exchange as string | undefined;
+        const exchange = exchangeFromDisplay || exchangeFromProfile || 'US';
+        const type = r.type || 'Stock';
+        const item: StockWithWatchlistStatus = {
+          symbol: upper,
+          name,
+          exchange,
+          type,
+          logoUrl: profile.logo,
+          officialName: profile.name,
+          isInWatchlist: false,
+        };
+        return item;
+      });
+
+    return mapped;
+
+  } catch (error) {
+    console.error('Error in stock search:', error);
+    return [];
+  }
+});
