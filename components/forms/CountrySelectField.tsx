@@ -21,6 +21,11 @@ import countryList from "react-select-country-list";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Control, Controller, FieldError } from "react-hook-form";
 
+/**
+ * Country type definition
+ * @property value - Country code (e.g., 'US')
+ * @property label - Country name (e.g., 'United States')
+ */
 type Country = {
   value: string;
   label: string;
@@ -29,7 +34,7 @@ type Country = {
 type CountrySelectProps = {
   name: string;
   label: string;
-  control: Control<any>;
+  control: Control;
   error?: FieldError;
   required?: boolean;
 };
@@ -39,13 +44,23 @@ type CountrySelectInternalProps = {
   onChange: (value: string) => void;
 };
 
+/**
+ * Internal Country Select Component
+ * Handles the country selection UI and interactions
+ * 
+ * @param value - Selected country code
+ * @param onChange - Selection change handler
+ */
 const CountrySelect = ({ value, onChange }: CountrySelectInternalProps) => {
   const [open, setOpen] = useState(false);
 
   // Get country options with flags
   const countries: Country[] = countryList().getData();
 
-  // Helper function to get flag emoji
+  /**
+   * Converts country code to flag emoji
+   * @param countryCode - Two-letter country code
+   */
   const getFlagEmoji = (countryCode: string) => {
     const codePoints = countryCode
       .toUpperCase()
@@ -106,6 +121,14 @@ const CountrySelect = ({ value, onChange }: CountrySelectInternalProps) => {
   );
 };
 
+/**
+ * Country Select Field Component
+ * Form field wrapper for country selection with validation
+ * Features:
+ * - Searchable country list
+ * - Flag emojis
+ * - Form integration
+ */
 const CountrySelectField = ({ name, label, control, error, required = false }: CountrySelectProps) => {
   return (
     <div className="space-y-2">

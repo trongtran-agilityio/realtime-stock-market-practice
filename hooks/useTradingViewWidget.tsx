@@ -1,6 +1,15 @@
 'use client';
 import { useEffect, useRef } from "react";
 
+/**
+ * Custom hook for TradingView widget integration
+ * Handles script injection and cleanup
+ * 
+ * @param scriptUrl - TradingView widget script URL
+ * @param config - Widget configuration object
+ * @param height - Widget height in pixels
+ * @returns Ref to widget container
+ */
 const useTradingViewWidget = (
   scriptUrl: string,
   config: Record<string, unknown>,

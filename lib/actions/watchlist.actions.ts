@@ -3,9 +3,14 @@
 import { connectToDatabase } from "@/database/mongoose";
 import Watchlist from "@/database/models/watchlist.model";
 
-// Return only the watchlist symbols (uppercase strings) for a given user email.
-// - Uses Better Auth's `user` collection (no dedicated User model)
-// - Fails gracefully by returning an empty array on any error or missing user
+/**
+ * Fetch watchlist symbols for a user
+ * @param email User's email address
+ * @returns Array of stock symbols in user's watchlist
+ * 
+ * Note: Uses Better Auth's user collection instead of a dedicated User model
+ * Returns empty array on any error or if user not found
+ */
 export const getWatchlistSymbolsByEmail = async (email: string): Promise<string[]> => {
   if (!email) return [];
 

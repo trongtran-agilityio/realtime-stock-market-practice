@@ -1,6 +1,10 @@
 import nodemailer from 'nodemailer';
 import { NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "@/lib/nodemailer/templates";
 
+/**
+ * Nodemailer transporter configuration
+ * Uses Gmail SMTP with environment credentials
+ */
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -9,6 +13,12 @@ export const transporter = nodemailer.createTransport({
   }
 });
 
+/**
+ * Send personalized welcome email to new users
+ * @param email - User's email address
+ * @param name - User's full name
+ * @param intro - AI-generated personalized introduction
+ */
 export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData) => {
   const htmlTemplate = WELCOME_EMAIL_TEMPLATE
     .replace('{{name}}', name)
@@ -25,6 +35,12 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
   await transporter.sendMail(mailOptions);
 }
 
+/**
+ * Send daily news summary email
+ * @param email - User's email address
+ * @param date - Current date formatted for display
+ * @param newsContent - AI-generated news summary
+ */
 export const sendNewsSummaryEmail = async ({ email, date, newsContent }: NewsSummaryEmailData) => {
   const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
     .replace('{{newsContent}}', newsContent)

@@ -4,9 +4,20 @@ import { NAV_ITEMS } from "@/lib/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+/**
+ * NavItems Component
+ * Renders main navigation links
+ * Features:
+ * - Responsive layout (vertical on mobile, horizontal on desktop)
+ * - Active link highlighting
+ */
 const NavItems = () => {
 
   const pathname = usePathname();
+  /**
+   * Check if current path matches navigation item
+   * @param path - Navigation item path
+   */
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
 

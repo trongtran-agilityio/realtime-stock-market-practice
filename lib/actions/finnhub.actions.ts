@@ -2,13 +2,21 @@
 
 import { getDateRange, validateArticle, formatArticle } from "@/lib/utils";
 
+/**
+ * Finnhub API Configuration
+ * Requires FINNHUB_API_KEY in environment
+ */
 const finnhubBaseUrl = process.env.FINNHUB_BASE_URL;
 const token = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
 if (!token) {
   throw new Error('FINNHUB API key is not configured');
 }
 
-// Generic JSON fetcher with optional revalidation caching
+/**
+ * Generic JSON fetcher with optional revalidation
+ * @param url API endpoint URL
+ * @param revalidateSeconds Cache duration in seconds
+ */
 export async function fetchJSON<T>(url: string, revalidateSeconds?: number): Promise<T> {
   const headers: HeadersInit = {};
   const init: RequestInit = revalidateSeconds
@@ -23,13 +31,17 @@ export async function fetchJSON<T>(url: string, revalidateSeconds?: number): Pro
   return res.json() as Promise<T>;
 }
 
-// Formatted news article type returned by formatArticle
+/**
+ * Formatted news article type returned by formatArticle
+ */
 export type FormattedNewsArticle = ReturnType<typeof formatArticle>;
 
-// Fetch market/company news with round-robin selection for provided symbols.
-// - When symbols provided: fetch company news for each, pick up to 6 via round-robin
-// - When no symbols: fetch general market news, dedupe, take top 6
-// - Always validate articles before formatting
+/**
+ * Fetch and format news articles
+ * - For specific symbols: Gets company news with round-robin selection
+ * - Without symbols: Gets general market news
+ * - Always returns up to 6 validated and formatted articles
+ */
 export async function getNews(symbols?: string[]): Promise<FormattedNewsArticle[]> {
   try {
     const { from, to } = getDateRange(5);

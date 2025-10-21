@@ -11,14 +11,21 @@ import { signUpWithEmail } from "@/lib/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+/**
+ * SignUp component handles new user registration and preference collection
+ */
 const SignUp = () => {
+  // Router hook for navigation after successful registration
   const router = useRouter();
+
+  // Initialize form handling with react-hook-form
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
+    // Set initial values for all form fields
     defaultValues: {
       fullName: '',
       email: '',
@@ -28,23 +35,31 @@ const SignUp = () => {
       riskTolerance: 'Medium',
       preferredIndustry: 'Technology'
     },
-    mode: 'onBlur'
+    mode: 'onBlur' // Validate fields when they lose focus
   })
+
+  /**
+   * Handle form submission for user registration
+   * @param data Contains user registration data and investment preferences
+   */
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      // Call server action here
+      // Attempt to register new user
       const result = await signUpWithEmail(data);
 
       if (result?.success) {
+        // Redirect to home page on successful registration
         router.replace('/');
         router.refresh();
       } else {
+        // Display error if registration fails
         toast.error('Sign up failed', {
           description: result?.error ?? 'Failed to sign up.'
         })
       }
 
     } catch (e) {
+      // Handle unexpected errors during registration
       console.error(e);
       toast.error('Sign up failed', {
         description: e instanceof Error ? e.message : 'Failed to create an account.'
@@ -57,6 +72,7 @@ const SignUp = () => {
       <h1 className="form-title">Sign Up & Personalize</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Basic user information fields */}
         <InputField
           name="fullName"
           label="Full Name"
@@ -66,6 +82,7 @@ const SignUp = () => {
           validation={{ required: 'Full name is required.', minLength: 2 }}
         />
 
+        {/* Email field with validation pattern */}
         <InputField
           name="email"
           label="Email"
@@ -74,13 +91,15 @@ const SignUp = () => {
           register={register}
           error={errors.email}
           validation={{
-            required: 'Email is required.', pattern: {
+            required: 'Email is required.',
+            pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: "Please enter a valid email address."
             }
           }}
         />
 
+        {/* Password field with minimum length requirement */}
         <InputField
           name="password"
           label="Password"
@@ -91,6 +110,7 @@ const SignUp = () => {
           validation={{ required: 'Password is required.', minLength: 8 }}
         />
 
+        {/* Location and investment preference fields */}
         <CountrySelectField
           name="country"
           label="Country"
@@ -99,6 +119,7 @@ const SignUp = () => {
           required
         />
 
+        {/* Investment profile selection fields */}
         <SelectField
           name="investmentGoals"
           label="Investment Goals"
@@ -129,13 +150,16 @@ const SignUp = () => {
           required
         />
 
+        {/* Submit button with loading state */}
         <Button type="submit" disabled={isSubmitting} className="yellow-btn w-full mt-5">
           {isSubmitting ? 'Creating Account' : 'Start Your Investing Journey'}
         </Button>
 
+        {/* Link to sign in page for existing users */}
         <FooterLink text="Already have an account?" linkText="Sign in" href="/sign-in" />
       </form>
     </>
   )
 }
+
 export default SignUp

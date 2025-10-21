@@ -1,11 +1,27 @@
+/**
+ * Application Constants
+ * Defines configuration for:
+ * - Navigation
+ * - TradingView widgets
+ * - User preferences options
+ */
 
+/**
+ * Main navigation items configuration
+ */
 export const NAV_ITEMS = [
   { href: '/', label: 'Dashboard' },
   { href: '/search', label: 'Search' },
   { href: '/watchlist', label: 'Watchlist' },
 ]
 
-// TradingView Charts
+/**
+ * TradingView market overview widget configuration
+ * Features:
+ * - Dark theme
+ * - Custom styling
+ * - Multiple symbol groups
+ */
 export const MARKET_OVERVIEW_WIDGET_CONFIG = {
   colorTheme: 'dark', // dark/light mode
   dateRange: '12M', // last 12 months
@@ -65,6 +81,9 @@ export const MARKET_OVERVIEW_WIDGET_CONFIG = {
   timezone: "Asia/Ho_Chi_Minh",
 };
 
+/**
+ * TradingView heatmap widget configuration
+ */
 export const HEATMAP_WIDGET_CONFIG = {
   dataSource: 'SPX500',
   blockSize: 'market_cap_basic',
@@ -141,6 +160,10 @@ export const MARKET_DATA_WIDGET_CONFIG = {
   ],
 };
 
+/**
+ * User preference options
+ * Used in sign-up form and profile settings
+ */
 export const INVESTMENT_GOALS = [
   { value: 'Growth', label: 'Growth' },
   { value: 'Income', label: 'Income' },

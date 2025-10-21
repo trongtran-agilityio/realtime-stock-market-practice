@@ -2,6 +2,10 @@
 
 import { connectToDatabase } from "@/database/mongoose";
 
+/**
+ * Fetch all users eligible for news delivery
+ * Returns array of users with email and preferences
+ */
 export const getAllUsersForNewsEmail = async () => {
   try {
     const mongoose = await connectToDatabase();
@@ -28,6 +32,11 @@ export const getAllUsersForNewsEmail = async () => {
   }
 }
 
+/**
+ * Update user's country preference
+ * @param email - User's email address
+ * @param country - Country code to set
+ */
 export const updateCountryForUserEmail = async (email: string, country: string) => {
   try {
     if (!email) throw new Error('Email is required.');

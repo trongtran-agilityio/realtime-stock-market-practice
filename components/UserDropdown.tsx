@@ -15,9 +15,19 @@ import { LogOut } from "lucide-react";
 import NavItems from "@/components/NavItems";
 import { signOut } from "@/lib/actions/auth.actions";
 
+/**
+ * UserDropdown Component
+ * Provides user profile menu with:
+ * - User avatar and info
+ * - Sign out functionality
+ * - Mobile navigation menu
+ */
 const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
 
+  /**
+   * Handle user sign out and redirect to login
+   */
   const handleSignOut = async () => {
     await signOut();
     router.push("/sign-in");
@@ -25,6 +35,7 @@ const UserDropdown = ({ user }: { user: User }) => {
 
   return (
     <DropdownMenu>
+      {/* Dropdown trigger with user avatar */}
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="flex items-center gap-3 text-gray-4 hover:text-yellow-500">
           <Avatar className="h-8 w-8">
@@ -42,6 +53,7 @@ const UserDropdown = ({ user }: { user: User }) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="text-gray-400">
+        {/* User profile header */}
         <DropdownMenuLabel>
           <div className="flex relative items-center gap-3 py-2">
             <Avatar className="h-10 w-10">
@@ -60,10 +72,13 @@ const UserDropdown = ({ user }: { user: User }) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-gray-600" />
 
+        {/* Sign out button */}
         <DropdownMenuItem onClick={handleSignOut} className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer">
           <LogOut className="h-4 w-4 hidden sm:block" />
           Logout
         </DropdownMenuItem>
+
+        {/* Mobile navigation menu */}
         <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
         <nav className="sm:hidden">
           <NavItems />

@@ -6,6 +6,11 @@ import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 import { getNews } from "@/lib/actions/finnhub.actions";
 import { formatDateToday } from "@/lib/utils";
 
+/**
+ * Send personalized welcome email when user signs up
+ * 1. Generate personalized content using AI
+ * 2. Send welcome email with user-specific information
+ */
 export const sendSignUpEmail = inngest.createFunction(
   { id: 'sign-up-email' },
   { event: 'app/user.created' },
@@ -50,6 +55,14 @@ export const sendSignUpEmail = inngest.createFunction(
   }
 );
 
+/**
+ * Send daily news summary to all users
+ * Steps:
+ * 1. Get all users eligible for news delivery
+ * 2. Fetch news based on user watchlists
+ * 3. Generate AI-powered news summaries
+ * 4. Send personalized emails
+ */
 export const sendDailyNewsSummary = inngest.createFunction(
   { id: 'daily-news-summary' },
   [{ event: 'app/send.daily.news' }, { cron: '0 12 * * *' }],
@@ -67,7 +80,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
     // Step 2: For each user, get their watchlist symbols -> fetch news (or general if none)
     // ------------------------------------------------------------------------
 
-    const newsList: any[] = [];
+    const newsList = [];
     for (const user of users) {
       const newsResult = await step.run(`step2-fetch-news-user-${user.email}`, async () => {
 

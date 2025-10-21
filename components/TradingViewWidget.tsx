@@ -4,6 +4,17 @@ import React, { memo } from 'react';
 import useTradingViewWidget from "@/hooks/useTradingViewWidget";
 import { cn } from "@/lib/utils";
 
+/**
+ * TradingViewWidget Component
+ * Renders TradingView widgets with custom configuration
+ * 
+ * @param title - Optional widget title
+ * @param scriptUrl - TradingView widget script URL
+ * @param config - Widget configuration object
+ * @param height - Widget height in pixels
+ * @param className - Additional CSS classes
+ */
+
 interface TradingViewWidgetProps {
   title?: string;
   scriptUrl: string;
@@ -13,6 +24,7 @@ interface TradingViewWidgetProps {
 }
 
 const TradingViewWidget = ({ title, scriptUrl, config, height = 600, className }: TradingViewWidgetProps) => {
+  // Initialize widget with custom hook
   const containerRef = useTradingViewWidget(scriptUrl, config, height);
 
   return (

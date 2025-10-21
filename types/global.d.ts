@@ -37,7 +37,7 @@ declare global {
     label: string;
     placeholder: string;
     options: readonly Option[];
-    control: Control<any>;
+    control: Control;
     error?: FieldError;
     required?: boolean;
   };

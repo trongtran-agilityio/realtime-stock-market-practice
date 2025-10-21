@@ -5,6 +5,12 @@ import { inngest } from "@/lib/inngest/client";
 import { headers } from "next/headers";
 import { updateCountryForUserEmail } from "@/lib/actions/user.actions";
 
+/**
+ * Handle user registration with email
+ * 1. Creates user account
+ * 2. Updates user's country
+ * 3. Triggers welcome email event
+ */
 export const signUpWithEmail = async ({
   email,
   password,
@@ -45,6 +51,9 @@ export const signUpWithEmail = async ({
 }
 
 
+/**
+ * Authenticate user with email and password
+ */
 export const signInWithEmail = async ({ email, password }: SignInFormData) => {
 
   try {
@@ -59,6 +68,10 @@ export const signInWithEmail = async ({ email, password }: SignInFormData) => {
   }
 }
 
+
+/**
+ * Sign out current user and clear session
+ */
 export const signOut = async () => {
   try {
     await auth.api.signOut({ headers: await headers() });

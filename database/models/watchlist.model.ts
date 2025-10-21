@@ -1,6 +1,9 @@
 import { Document, Schema, model, models } from "mongoose";
 
-// Watchlist item interface representing a single document in the collection
+/**
+ * Watchlist Item Interface
+ * Represents a stock symbol saved to a user's watchlist
+ */
 export interface WatchlistItem extends Document {
   userId: string;   // ID of the user who added the symbol
   symbol: string;   // Stock ticker symbol (always uppercase)
@@ -8,7 +11,13 @@ export interface WatchlistItem extends Document {
   addedAt: Date;    // When this symbol was added to the watchlist
 }
 
-// Mongoose schema for the Watchlist collection
+/**
+ * Watchlist Schema Definition
+ * Features:
+ * - Compound index for unique symbols per user
+ * - Automatic uppercase conversion for symbols
+ * - Timestamp tracking for when items are added
+ */
 const WatchlistSchema = new Schema<WatchlistItem>(
   {
     userId: { type: String, required: true, index: true },
