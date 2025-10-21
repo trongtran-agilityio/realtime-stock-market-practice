@@ -94,10 +94,10 @@ Notes:
 **Tasks:**
 
 * [x] Create **Sign Up** page using shadcn/ui components.
-* [ ] Create **Sign In** page using shadcn/ui components.
+* [x] Create **Sign In** page using shadcn/ui components.
 * [x] Build Auth layout (`app/(auth)/layout.tsx`) separate from main layout.
-* [ ] Add input validation and error states.
-* [ ] Ensure seamless navigation between Auth and main pages.
+* [x] Add input validation and error states.
+* [x] Ensure seamless navigation between Auth and main pages.
 
 **Deliverables:**
 - ✅ Auth pages visually complete
@@ -111,13 +111,13 @@ Notes:
 
 **Tasks:**
 
-* [ ] Connect to **MongoDB** via Mongoose using `MONGODB_URI` from `.env`.
-* [ ] Define initial models:
+* [x] Connect to **MongoDB** via Mongoose using `MONGODB_URI` from `.env`.
+* [x] Define initial models:
 
   * `User` (email, name, subscribed flag)
   * `Watchlist` (optional later)
-* [ ] Verify DB connection and seed test data.
-* [ ] Confirm persistence by restarting containers.
+* [x] Verify DB connection and seed test data.
+* [x] Confirm persistence by restarting containers.
 
 **Deliverables:**
 - ✅ MongoDB schema defined
@@ -131,11 +131,11 @@ Notes:
 
 **Tasks:**
 
-* [ ] Install and configure **Better Auth** library.
-* [ ] Implement full auth flow: Sign Up, Sign In, Sign Out.
-* [ ] Protect routes using middleware (auth guard).
-* [ ] Store user sessions securely (cookies / JWT).
-* [ ] Connect backend logic to MongoDB user model.
+* [x] Install and configure **Better Auth** library.
+* [x] Implement full auth flow: Sign Up, Sign In, Sign Out.
+* [x] Protect routes using middleware (auth guard).
+* [x] Store user sessions securely (cookies / JWT).
+* [x] Connect backend logic to MongoDB user model.
 
 **Deliverables:**
 - ✅ Auth backend implemented
@@ -149,7 +149,7 @@ Notes:
 
 **Tasks:**
 
-* [ ] Install and initialize **Inngest** CLI:
+* [x] Install and initialize **Inngest** CLI:
 
   ```bash
   npx inngest-cli@latest dev

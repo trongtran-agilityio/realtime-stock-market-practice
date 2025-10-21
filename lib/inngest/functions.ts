@@ -1,10 +1,10 @@
-import {inngest} from "@/lib/inngest/client";
-import {NEWS_SUMMARY_EMAIL_PROMPT, PERSONALIZED_WELCOME_EMAIL_PROMPT} from "@/lib/inngest/prompts";
-import {sendNewsSummaryEmail, sendWelcomeEmail} from "@/lib/nodemailer";
-import {getAllUsersForNewsEmail} from "@/lib/actions/user.actions";
+import { inngest } from "@/lib/inngest/client";
+import { NEWS_SUMMARY_EMAIL_PROMPT, PERSONALIZED_WELCOME_EMAIL_PROMPT } from "@/lib/inngest/prompts";
+import { sendNewsSummaryEmail, sendWelcomeEmail } from "@/lib/nodemailer";
+import { getAllUsersForNewsEmail } from "@/lib/actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 import { getNews } from "@/lib/actions/finnhub.actions";
-import {formatDateToday} from "@/lib/utils";
+import { formatDateToday } from "@/lib/utils";
 
 export const sendSignUpEmail = inngest.createFunction(
   { id: 'sign-up-email' },
@@ -39,7 +39,7 @@ export const sendSignUpEmail = inngest.createFunction(
       const introText = (part && 'text' in part ? part.text : null) || defaultIntroText;
 
       // Destructure data from event
-      const { data: {email, name} } = event;
+      const { data: { email, name } } = event;
       return await sendWelcomeEmail({ email, name, intro: introText });
     });
 
@@ -52,7 +52,7 @@ export const sendSignUpEmail = inngest.createFunction(
 
 export const sendDailyNewsSummary = inngest.createFunction(
   { id: 'daily-news-summary' },
-  [ {event: 'app/send.daily.news' }, { cron: '0 12 * * *' } ],
+  [{ event: 'app/send.daily.news' }, { cron: '0 12 * * *' }],
   async ({ step }) => {
 
     // ------------------------------------------------------------------------
@@ -103,7 +103,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
     // Step 3: (placeholder) Summarize news via AI
     // ------------------------------------------------------------------------
     const userNewsSummaries: { user: User; newsContent: string | null }[] = [];
-    for (const {user, articles} of newsList) {
+    for (const { user, articles } of newsList) {
 
       // Get or default country code
       const countryCode = user.country ?? 'EN';
@@ -111,7 +111,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
 
       try {
         const prompt = NEWS_SUMMARY_EMAIL_PROMPT
-          .replace('{{newsData}}', JSON.stringify(articles,null, 2))
+          .replace('{{newsData}}', JSON.stringify(articles, null, 2))
           .replace('{{countryCode}}', countryCode);
         const response = await step.ai.infer(`step3-summarize-news-${user.email}`, {
           model: step.ai.models.gemini({ model: 'gemini-2.0-flash-lite' }),
@@ -141,7 +141,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
         userNewsSummaries.map(async ({ user, newsContent }) => {
           if (!newsContent) return null;
           try {
-            await sendNewsSummaryEmail( { email: user.email, date: formatDateToday(), newsContent });
+            await sendNewsSummaryEmail({ email: user.email, date: formatDateToday(), newsContent });
             return true;
 
           } catch (e) {
@@ -151,7 +151,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
         })
       );
 
-      return { success: true, message: `Total ${results.length} daily news summary emails are already sent.`};
+      return { success: true, message: `Total ${results.length} daily news summary emails are already sent.` };
     });
 
     // Return success even if some users failed; we log counts for diagnostics

@@ -1,8 +1,8 @@
 
 export const NAV_ITEMS = [
-  { href: '/', label: 'Dashboard'},
-  { href: '/search', label: 'Search'},
-  { href: '/watchlist', label: 'Watchlist'},
+  { href: '/', label: 'Dashboard' },
+  { href: '/search', label: 'Search' },
+  { href: '/watchlist', label: 'Watchlist' },
 ]
 
 // TradingView Charts
@@ -142,10 +142,10 @@ export const MARKET_DATA_WIDGET_CONFIG = {
 };
 
 export const INVESTMENT_GOALS = [
-  { value: 'Growth', label: 'Growth'},
-  { value: 'Income', label: 'Income'},
-  { value: 'Balanced', label: 'Balanced'},
-  { value: 'Conservative', label: 'Conservative'},
+  { value: 'Growth', label: 'Growth' },
+  { value: 'Income', label: 'Income' },
+  { value: 'Balanced', label: 'Balanced' },
+  { value: 'Conservative', label: 'Conservative' },
 ]
 
 export const RISK_TOLERANCE_OPTIONS = [

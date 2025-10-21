@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import {NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE} from "@/lib/nodemailer/templates";
+import { NEWS_SUMMARY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "@/lib/nodemailer/templates";
 
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -25,7 +25,7 @@ export const sendWelcomeEmail = async ({ email, name, intro }: WelcomeEmailData)
   await transporter.sendMail(mailOptions);
 }
 
-export const sendNewsSummaryEmail = async ({ email, date, newsContent}: NewsSummaryEmailData ) => {
+export const sendNewsSummaryEmail = async ({ email, date, newsContent }: NewsSummaryEmailData) => {
   const htmlTemplate = NEWS_SUMMARY_EMAIL_TEMPLATE
     .replace('{{newsContent}}', newsContent)
     .replace('{{date}}', date);

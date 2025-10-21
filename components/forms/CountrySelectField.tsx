@@ -1,6 +1,6 @@
 'use client';
 
-import { useState} from 'react'
+import { useState } from 'react'
 import {
   Popover,
   PopoverContent,
@@ -14,12 +14,12 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import {Label} from "@/components/ui/label";
-import {Button} from "@/components/ui/button";
-import {cn} from "@/lib/utils";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import countryList from "react-select-country-list";
-import {Check, ChevronsUpDown} from "lucide-react";
-import {Control, Controller, FieldError} from "react-hook-form";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Control, Controller, FieldError } from "react-hook-form";
 
 type Country = {
   value: string;
@@ -39,7 +39,7 @@ type CountrySelectInternalProps = {
   onChange: (value: string) => void;
 };
 
-const CountrySelect = ({value, onChange}: CountrySelectInternalProps) => {
+const CountrySelect = ({ value, onChange }: CountrySelectInternalProps) => {
   const [open, setOpen] = useState(false);
 
   // Get country options with flags
@@ -106,7 +106,7 @@ const CountrySelect = ({value, onChange}: CountrySelectInternalProps) => {
   );
 };
 
-const CountrySelectField = ({name, label, control, error, required = false}: CountrySelectProps) => {
+const CountrySelectField = ({ name, label, control, error, required = false }: CountrySelectProps) => {
   return (
     <div className="space-y-2">
       <Label htmlFor={name} className="form-label">{label}</Label>

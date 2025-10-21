@@ -1,26 +1,25 @@
 'use server';
 
-import {auth} from "@/lib/better-auth/auth";
-import {inngest} from "@/lib/inngest/client";
-import {headers} from "next/headers";
-import {connectToDatabase} from "@/database/mongoose";
-import {updateCountryForUserEmail} from "@/lib/actions/user.actions";
+import { auth } from "@/lib/better-auth/auth";
+import { inngest } from "@/lib/inngest/client";
+import { headers } from "next/headers";
+import { updateCountryForUserEmail } from "@/lib/actions/user.actions";
 
 export const signUpWithEmail = async ({
-                                        email,
-                                        password,
-                                        fullName,
-                                        country,
-                                        investmentGoals,
-                                        riskTolerance,
-                                        preferredIndustry }: SignUpFormData) => {
+  email,
+  password,
+  fullName,
+  country,
+  investmentGoals,
+  riskTolerance,
+  preferredIndustry }: SignUpFormData) => {
 
   try {
 
     // ----------------------------------
     // STEP 1: Sign Up
     const response = await auth.api.signUpEmail({
-      body: { email, password, name: fullName}
+      body: { email, password, name: fullName }
     });
 
     // ----------------------------------
@@ -46,11 +45,11 @@ export const signUpWithEmail = async ({
 }
 
 
-export const signInWithEmail = async ({ email, password}: SignInFormData) => {
+export const signInWithEmail = async ({ email, password }: SignInFormData) => {
 
   try {
     const response = await auth.api.signInEmail({
-      body: { email, password}
+      body: { email, password }
     });
     return { success: true, data: response };
 

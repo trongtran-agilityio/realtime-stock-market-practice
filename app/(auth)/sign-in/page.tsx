@@ -52,10 +52,12 @@ const SignIn = () => {
           type="email"
           register={register}
           error={errors.email}
-          validation={{ required: 'Email is required.', pattern: {
+          validation={{
+            required: 'Email is required.', pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: "Please enter a valid email address."
-            } }}
+            }
+          }}
         />
 
         <InputField

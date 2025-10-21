@@ -26,6 +26,6 @@ try {
 } catch (err) {
   const ms = Date.now() - start;
   console.error(JSON.stringify({ ok: false, ms, error: err?.message || String(err) }, null, 2));
-  try { await mongoose.disconnect(); } catch {}
+  try { await mongoose.disconnect(); } catch { }
   process.exit(2);
 }
