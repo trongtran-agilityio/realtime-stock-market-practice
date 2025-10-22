@@ -41,10 +41,10 @@ Notes:
 - Mongo Express (UI): http://localhost:8081
 
 **Deliverables:**
-- ✅ Working Next.js base project
-- ✅ Tailwind + shadcn configured
-- ✅ Local MongoDB container running via Docker
-- ✅ `.env` file prepared for all API keys and secrets
+- Working Next.js base project
+- Tailwind + shadcn configured
+- Local MongoDB container running via Docker
+- `.env` file prepared for all API keys and secrets
 
 ---
 
@@ -60,8 +60,8 @@ Notes:
 * [x] Ensure responsive layout (desktop/mobile views).
 
 **Deliverables:**
-- ✅ Shared layout and navigation implemented
-- ✅ Base UI structure ready for all routes
+- Shared layout and navigation implemented
+- Base UI structure ready for all routes
 
 ---
 
@@ -82,8 +82,8 @@ Notes:
 * [ ] Make the page fully responsive.
 
 **Deliverables:**
-- ✅ Homepage displays dynamic market data with charts
-- ✅ Chart updates when data changes
+- Homepage displays dynamic market data with charts
+- Chart updates when data changes
 
 ---
 
@@ -100,8 +100,8 @@ Notes:
 * [x] Ensure seamless navigation between Auth and main pages.
 
 **Deliverables:**
-- ✅ Auth pages visually complete
-- ✅ Frontend validation and navigation ready
+- Auth pages visually complete
+- Frontend validation and navigation ready
 
 ---
 
@@ -120,8 +120,8 @@ Notes:
 * [x] Confirm persistence by restarting containers.
 
 **Deliverables:**
-- ✅ MongoDB schema defined
-- ✅ Database connectivity verified
+- MongoDB schema defined
+- Database connectivity verified
 
 ---
 
@@ -138,8 +138,8 @@ Notes:
 * [x] Connect backend logic to MongoDB user model.
 
 **Deliverables:**
-- ✅ Auth backend implemented
-- ✅ Protected routes working correctly
+- Auth backend implemented
+- Protected routes working correctly
 
 ---
 
@@ -169,8 +169,8 @@ Notes:
 * [x] Test workflow locally with `inngest dev`.
 
 **Deliverables:**
-- ✅ Fully automated AI-generated daily summary email
-- ✅ Workflow tested locally via Inngest CLI
+- Fully automated AI-generated daily summary email
+- Workflow tested locally via Inngest CLI
 
 ---
 
@@ -180,14 +180,14 @@ Notes:
 
 **Tasks:**
 
-* [x] Implement `/api/search?q=` endpoint (Next.js API route).
+* [x] Implement `/api/search?q=` API from Finnhub.
 * [x] Integrate **Finnhub API** to fetch symbol search results.
 * [x] Build search UI with debounce + result dropdown.
 * [x] Display company name, ticker, and logo.
 * [x] Handle empty state and errors gracefully.
 
 **Deliverables:**
-- ✅ Stock search functional with Finnhub data
+- Stock search functional with Finnhub data
 
 ---
 
@@ -207,7 +207,7 @@ Notes:
 * [x] Add “Add to Watchlist” button (if implementing Phase 10).
 
 **Deliverables:**
-- ✅ Fully functional stock details page with charts and info
+- Fully functional stock details page with charts and info
 
 ---
 
@@ -224,8 +224,8 @@ Notes:
 * [ ] Configure HTTPS and domain if applicable.
 
 **Deliverables:**
-- ✅ Live app deployed to Vercel
-- ✅ Inngest and email automation confirmed working
+- Live app deployed to Vercel
+- Inngest and email automation confirmed working
 
 ---
 
@@ -241,7 +241,7 @@ Notes:
 * [ ] Modify Inngest workflow to skip unsubscribed users.
 
 **Deliverables:**
-- ✅ Unsubscribe functionality working correctly
+- Unsubscribe functionality working correctly
 
 ---
 
