@@ -154,20 +154,19 @@ Notes:
   ```bash
   npx inngest-cli@latest dev
   ```
-* [ ] Create a **daily cron job workflow** using Inngest:
+* [x] Create a **daily cron job workflow** using Inngest:
 
   * Fetch top market data (Finnhub)
   * Fetch market news
   * Generate AI summary via **Google Gemini API**
   * Send formatted email via **Nodemailer**
-  * Include unsubscribe “Stop Daily Emails” step
-* [ ] Write helper functions:
+* [x] Write helper functions:
 
   * `fetchMarketData()`
   * `generateAISummary()`
   * `sendDailyEmail()`
-* [ ] Add logs to track workflow status.
-* [ ] Test workflow locally with `inngest dev`.
+* [x] Add logs to track workflow status.
+* [x] Test workflow locally with `inngest dev`.
 
 **Deliverables:**
 - ✅ Fully automated AI-generated daily summary email
@@ -181,11 +180,11 @@ Notes:
 
 **Tasks:**
 
-* [ ] Implement `/api/search?q=` endpoint (Next.js API route).
+* [x] Implement `/api/search?q=` endpoint (Next.js API route).
 * [x] Integrate **Finnhub API** to fetch symbol search results.
 * [x] Build search UI with debounce + result dropdown.
-* [ ] Display company name, ticker, and logo.
-* [ ] Handle empty state and errors gracefully.
+* [x] Display company name, ticker, and logo.
+* [x] Handle empty state and errors gracefully.
 
 **Deliverables:**
 - ✅ Stock search functional with Finnhub data
@@ -198,14 +197,14 @@ Notes:
 
 **Tasks:**
 
-* [ ] Create dynamic route `/stock/[symbol]`.
-* [ ] Fetch:
+* [x] Create dynamic route `/stock/[symbol]`.
+* [x] Fetch:
 
   * Real-time quote data
   * Historical candle data
   * Company info (sector, market cap, etc.)
-* [ ] Render interactive chart (ApexCharts or Recharts).
-* [ ] Add “Add to Watchlist” button (if implementing Phase 10).
+* [x] Render interactive chart (ApexCharts or Recharts).
+* [x] Add “Add to Watchlist” button (if implementing Phase 10).
 
 **Deliverables:**
 - ✅ Fully functional stock details page with charts and info
