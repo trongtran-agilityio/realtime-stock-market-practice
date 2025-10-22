@@ -203,7 +203,7 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
 
   try {
     if (trimmed) {
-      const url = `${finnhubBaseUrl}/search?q=${trimmed}&token=${token}`;
+      const url = `${finnhubBaseUrl}/search?q=${encodeURIComponent(trimmed)}&token=${token}`;
       const data = await fetchJSON<FinnhubSearchResponse>(url, 1800);
       results = Array.isArray(data?.result) ? data.result : [];
 
@@ -213,7 +213,7 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
       const top10Profiles = await Promise.all(
         top10Symbols.map(async (symbol) => {
           try {
-            const url = `${finnhubBaseUrl}/stock/profile2?symbol=${symbol}&token=${token}`;
+            const url = `${finnhubBaseUrl}/stock/profile2?symbol=${encodeURIComponent(symbol)}&token=${token}`;
             const profile = await fetchJSON<any>(url, 3600);
             return { symbol, profile } as { symbol: string, profile: any };
 

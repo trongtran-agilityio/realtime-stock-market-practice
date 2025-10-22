@@ -14,16 +14,18 @@ import {
 const TV_SCRIPT_BASE =
   "https://s3.tradingview.com/external-embedding/embed-widget";
 
+interface StockDetailsProps {
+  params: Promise <{
+    symbol: string;
+  }>;
+}
+
 /**
  * StockDetails Page
  * Dynamic stock detail view with responsive 2-column layout
  */
-const StockDetails = async ({
-  params,
-}: {
-  params: { symbol: string };
-}) => {
-  const symbol = params.symbol?.toUpperCase() || "AAPL";
+const StockDetails = async ({ params }: StockDetailsProps) => {
+  const { symbol } = await params;
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-screen home-wrapper">

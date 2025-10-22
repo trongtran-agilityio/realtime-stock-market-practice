@@ -10,7 +10,7 @@ import {
   CommandItem,
 } from "@/components/ui/command"
 import { Button } from "@/components/ui/button";
-import { Loader2, TrendingUp } from "lucide-react";
+import {Loader2, Star, TrendingUp} from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import Link from "next/link";
@@ -121,6 +121,9 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                         {stock.symbol} | {stock.exchange} | {stock.type}
                       </div>
                     </div>
+
+                    {/* //TODO: Click on star to add/remove stock company to/from the Watchlist.*/}
+                    <Star />
                   </Link>
                 </CommandItem>
               ))}
