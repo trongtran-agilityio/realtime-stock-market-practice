@@ -1,7 +1,8 @@
 'use server';
 
 import { getDateRange, validateArticle, formatArticle } from "@/lib/utils";
-import {cache} from "react";
+import { cache } from "react";
+import { POPULAR_STOCK_SYMBOLS } from "@/lib/constants";
 
 /**
  * Finnhub API Configuration
@@ -32,10 +33,12 @@ export async function fetchJSON<T>(url: string, revalidateSeconds?: number): Pro
   return res.json() as Promise<T>;
 }
 
+
 /**
  * Formatted news article type returned by formatArticle
  */
 export type FormattedNewsArticle = ReturnType<typeof formatArticle>;
+
 
 /**
  * Fetch and format news articles
@@ -139,16 +142,34 @@ export async function getNews(symbols?: string[]): Promise<FormattedNewsArticle[
     throw new Error('Failed to fetch news');
   }
 }
-export async function getCompanyProfile(symbol: string): Promise<{ logo: string | null; name: string; country?: string; exchange?: string; marketCapitalization?: number; }> {
+
+/**
+ * Fetch company profile from Finnhub API
+ * Features:
+ * - Retrieves company logo, name, and metadata
+ * - Caches responses for 1 hour
+ * - Falls back to default values on error
+ * 
+ * @param symbol - Stock ticker symbol (e.g., 'AAPL')
+ * @returns Company profile with logo URL and basic info
+ */
+export async function getCompanyProfile(symbol: string): Promise<{
+  logo: string | null;
+  name: string;
+  country?: string;
+  exchange?: string;
+  marketCapitalization?: number;
+}> {
   try {
     const url = `${finnhubBaseUrl}/stock/profile2?symbol=${encodeURIComponent(symbol.toUpperCase())}&token=${token}`;
+    // Cache profile data for 1 hour to reduce API calls
     const profile = await fetchJSON<{
       logo?: string;
       name?: string;
       country?: string;
       exchange?: string;
       marketCapitalization?: number;
-    }>(url, 3600); // Cache for 1 hour
+    }>(url, 3600);
 
     return {
       logo: profile.logo || null,
@@ -163,16 +184,60 @@ export async function getCompanyProfile(symbol: string): Promise<{ logo: string 
   }
 }
 
+/**
+ * Search for stocks by query or get popular stocks
+ * Features:
+ * - Search by symbol/name when query provided
+ * - Returns top 10 popular stocks when no query
+ * - Enriches results with company profiles
+ * - Caches results to minimize API calls
+ * - React cache wrapper for automatic request deduplication
+ * 
+ * @param query - Optional search query
+ * @returns Array of stocks with logos and watchlist status
+ */
 export const searchStocks = cache(async (query?: string): Promise<StockWithWatchlistStatus[]> => {
 
   const trimmed = typeof query === 'string' ? query.trim() : '';
   let results: FinnhubSearchResult[] = [];
-  console.log('------ HERE 2');
+
   try {
     if (trimmed) {
       const url = `${finnhubBaseUrl}/search?q=${trimmed}&token=${token}`;
       const data = await fetchJSON<FinnhubSearchResponse>(url, 1800);
       results = Array.isArray(data?.result) ? data.result : [];
+
+    } else {
+      // By default, fetch top 10 popular symbols's profiles
+      const top10Symbols = POPULAR_STOCK_SYMBOLS.slice(0, 10);
+      const top10Profiles = await Promise.all(
+        top10Symbols.map(async (symbol) => {
+          try {
+            const url = `${finnhubBaseUrl}/stock/profile2?symbol=${symbol}&token=${token}`;
+            const profile = await fetchJSON<any>(url, 3600);
+            return { symbol, profile } as { symbol: string, profile: any };
+
+          } catch (e) {
+            console.error(`Error fetching profile for ${symbol}`, e);
+            return { symbol, profile: null } as { symbol: string, profile: any };
+          }
+        })
+      );
+
+      results = top10Profiles
+        .filter(({ profile }) => profile?.name)
+        .map(({ symbol, profile }) => {
+          const exchange: string | undefined = profile?.exchange || undefined;
+
+          const r: FinnhubSearchResult = {
+            symbol,
+            description: profile.name!,
+            displaySymbol: symbol,
+            type: 'Common stock.'
+          };
+          (r as any).__exchange = exchange; // internal only
+          return r;
+        });
     }
 
     // Fetch company profiles to have logos and official names

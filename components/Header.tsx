@@ -2,13 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 import NavItems from "@/components/NavItems";
 import UserDropdown from "@/components/UserDropdown";
+import {searchStocks} from "@/lib/actions/finnhub.actions";
 
 /**
  * Header Component
  * Main navigation bar containing logo, nav items and user menu
  * @param user - Current authenticated user object
  */
-const Header = ({ user }: { user: User }) => {
+const Header = async ({ user }: { user: User }) => {
+
+  const initialStocks = await searchStocks();
+
   return (
     <header className="sticky top-0 header">
       <div className="container header-wrapper">
@@ -19,11 +23,13 @@ const Header = ({ user }: { user: User }) => {
 
         {/* Navigation items - hidden on mobile */}
         <nav className="hidden sm:block">
-          <NavItems />
+          <NavItems initialStocks={initialStocks}/>
         </nav>
 
         {/* User profile dropdown */}
-        <UserDropdown user={user} />
+        <UserDropdown
+          user={user}
+          initialStocks={initialStocks} />
       </div>
     </header>
   )
