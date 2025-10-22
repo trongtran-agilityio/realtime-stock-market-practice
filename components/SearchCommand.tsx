@@ -100,13 +100,13 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
               {isSearchMode ? 'No Results found' : 'No stocks available'}
             </div>
           ) : (
-            <ul>
+            <CommandGroup>
               <div className="search-count">
                 {isSearchMode ? 'Search results' : 'Popular stocks'}
                 {" "} ({displayStocks.length || 0})
               </div>
               {displayStocks?.map((stock) => (
-                <li key={stock.symbol} className="search-item">
+                <CommandItem key={stock.symbol} className="search-item" asChild>
                   <Link
                     href={`/stocks/${stock.symbol}`}
                     onClick={handleSelectStock}
@@ -122,9 +122,9 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                       </div>
                     </div>
                   </Link>
-                </li>
+                </CommandItem>
               ))}
-            </ul>
+            </CommandGroup>
           )}
         </CommandList>
       </CommandDialog>
