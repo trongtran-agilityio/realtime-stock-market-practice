@@ -9,6 +9,12 @@ export interface WatchlistItem extends Document {
   symbol: string;   // Stock ticker symbol (always uppercase)
   company: string;  // Company name
   addedAt: Date;    // When this symbol was added to the watchlist
+
+  // Optional snapshot metrics (faked/randomized for UI display)
+  price?: number;
+  change?: number;      // daily change percentage
+  marketCap?: number;   // in USD
+  peRatio?: number;     // price-to-earnings ratio
 }
 
 /**
@@ -24,6 +30,10 @@ const WatchlistSchema = new Schema<WatchlistItem>(
     symbol: { type: String, required: true, uppercase: true, trim: true },
     company: { type: String, required: true, trim: true },
     addedAt: { type: Date, default: Date.now },
+    price: { type: Number, default: () => +(50 + Math.random() * 450).toFixed(2) },
+    change: { type: Number, default: () => +((-5 + Math.random() * 10).toFixed(2)) },
+    marketCap: { type: Number, default: () => Math.floor(1e9 + Math.random() * 999e9) },
+    peRatio: { type: Number, default: () => +(5 + Math.random() * 35).toFixed(2) },
   },
   { timestamps: false }
 );

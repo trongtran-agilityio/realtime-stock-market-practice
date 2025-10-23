@@ -9,6 +9,9 @@ import {
   COMPANY_PROFILE_WIDGET_CONFIG,
   COMPANY_FINANCIALS_WIDGET_CONFIG,
 } from "@/lib/constants";
+import { headers } from "next/headers";
+import { auth } from "@/lib/better-auth/auth";
+import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 
 // Base URL for TradingView widget scripts
 const TV_SCRIPT_BASE =
@@ -26,6 +29,11 @@ interface StockDetailsProps {
  */
 const StockDetails = async ({ params }: StockDetailsProps) => {
   const { symbol } = await params;
+
+  const session = await auth.api.getSession({ headers: await headers() });
+  const email = session?.user?.email as string;
+  const symbols = await getWatchlistSymbolsByEmail(email);
+  const initialInWatchlist = symbols.includes(symbol.toUpperCase());
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-screen home-wrapper">
@@ -62,7 +70,7 @@ const StockDetails = async ({ params }: StockDetailsProps) => {
       <section className="grid w-full gap-8">
         {/* Watchlist Button */}
         <div className="flex items-center gap-4">
-          <WatchlistButton symbol={symbol} />
+          <WatchlistButton symbol={symbol} userEmail={email} initialInWatchlist={initialInWatchlist} />
         </div>
 
         <div>

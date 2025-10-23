@@ -14,18 +14,29 @@ import {Loader2, Star, TrendingUp} from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import Link from "next/link";
+import { toggleWatchlist } from "@/lib/actions/watchlist.actions";
+import { toast } from "sonner";
 
 interface SearchCommandProps {
   renderAs?: 'button' | 'text';
   label?: string
   initialStocks: StockWithWatchlistStatus[];
+  userEmail: string;
+  watchlistSymbols?: string[];
 }
 
-export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks }: SearchCommandProps) {
+export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userEmail, watchlistSymbols = [] }: SearchCommandProps) {
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [loading, setLoading] = useState(false)
-  const [stocks, setStocks] = useState<StockWithWatchlistStatus[]>(initialStocks);
+
+  const watchlistSet = new Set((watchlistSymbols || []).map((s) => s.toUpperCase()));
+  const annotate = (arr: StockWithWatchlistStatus[]) => (arr || []).map((s) => ({
+    ...s,
+    isInWatchlist: watchlistSet.has((s.symbol || '').toUpperCase()),
+  }));
+
+  const [stocks, setStocks] = useState<StockWithWatchlistStatus[]>(annotate(initialStocks));
 
   const isSearchMode = searchTerm.trim();
   const displayStocks = isSearchMode ? stocks : stocks?.slice(0, 10);
@@ -47,7 +58,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
     setLoading(true);
     try {
       const results = await searchStocks(searchTerm.trim());
-      setStocks(results);
+      setStocks(annotate(results));
     } catch {
       setStocks([]);
     } finally {
@@ -64,7 +75,27 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
   const handleSelectStock = () => {
     setOpen(false);
     setSearchTerm('');
-    setStocks(initialStocks);
+    setStocks(annotate(initialStocks));
+  }
+
+  const handleToggleStar = async (
+    e: React.MouseEvent,
+    symbol: string,
+    company: string,
+    current: boolean
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // optimistic update
+    setStocks((prev) => prev.map((s) => s.symbol === symbol ? { ...s, isInWatchlist: !current } : s));
+    const res = await toggleWatchlist(userEmail, symbol, company || symbol);
+    if (!res?.ok) {
+      setStocks((prev) => prev.map((s) => s.symbol === symbol ? { ...s, isInWatchlist: current } : s));
+      toast.error("Failed to update watchlist.");
+      return;
+    }
+    if (res.action === 'added') toast.success(`${symbol} added to Watchlist`);
+    if (res.action === 'removed') toast.success(`${symbol} removed from Watchlist`);
   }
 
   return (
@@ -122,8 +153,14 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                       </div>
                     </div>
 
-                    {/* //TODO: Click on star to add/remove stock company to/from the Watchlist.*/}
-                    <Star />
+                    <button
+                      aria-label="Toggle watchlist"
+                      onClick={(e) => handleToggleStar(e, stock.symbol, stock.name, stock.isInWatchlist)}
+                      className={"ml-3 " + (stock.isInWatchlist ? "text-yellow-500" : "text-gray-500 hover:text-yellow-500")}
+                      title={stock.isInWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+                    >
+                      <Star className="h-4 w-4" fill={stock.isInWatchlist ? "currentColor" : "none"} />
+                    </button>
                   </Link>
                 </CommandItem>
               ))}

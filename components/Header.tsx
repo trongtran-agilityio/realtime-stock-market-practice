@@ -2,7 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import NavItems from "@/components/NavItems";
 import UserDropdown from "@/components/UserDropdown";
-import {searchStocks} from "@/lib/actions/finnhub.actions";
+import { searchStocks } from "@/lib/actions/finnhub.actions";
+import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 
 /**
  * Header Component
@@ -12,6 +13,7 @@ import {searchStocks} from "@/lib/actions/finnhub.actions";
 const Header = async ({ user }: { user: User }) => {
 
   const initialStocks = await searchStocks();
+  const watchlistSymbols = await getWatchlistSymbolsByEmail(user.email);
 
   return (
     <header className="sticky top-0 header">
@@ -23,13 +25,15 @@ const Header = async ({ user }: { user: User }) => {
 
         {/* Navigation items - hidden on mobile */}
         <nav className="hidden sm:block">
-          <NavItems initialStocks={initialStocks}/>
+          <NavItems initialStocks={initialStocks} userEmail={user.email} watchlistSymbols={watchlistSymbols} />
         </nav>
 
         {/* User profile dropdown */}
         <UserDropdown
           user={user}
-          initialStocks={initialStocks} />
+          initialStocks={initialStocks}
+          watchlistSymbols={watchlistSymbols}
+        />
       </div>
     </header>
   )

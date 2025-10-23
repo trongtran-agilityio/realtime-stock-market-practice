@@ -12,7 +12,7 @@ import SearchCommand from "@/components/SearchCommand";
  * - Responsive layout (vertical on mobile, horizontal on desktop)
  * - Active link highlighting
  */
-const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[] }) => {
+const NavItems = ({ initialStocks, userEmail, watchlistSymbols = [] }: { initialStocks: StockWithWatchlistStatus[], userEmail: string, watchlistSymbols?: string[] }) => {
 
   const pathname = usePathname();
   /**
@@ -35,6 +35,8 @@ const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[]
               renderAs="text"
               label="Search"
               initialStocks={initialStocks}
+              userEmail={userEmail}
+              watchlistSymbols={watchlistSymbols}
             />
           </li>
         );

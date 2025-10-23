@@ -22,7 +22,7 @@ import { signOut } from "@/lib/actions/auth.actions";
  * - Sign out functionality
  * - Mobile navigation menu
  */
-const UserDropdown = ({ user, initialStocks }: { user: User, initialStocks: StockWithWatchlistStatus[] }) => {
+const UserDropdown = ({ user, initialStocks, watchlistSymbols = [] }: { user: User, initialStocks: StockWithWatchlistStatus[], watchlistSymbols?: string[] }) => {
   const router = useRouter();
 
   /**
@@ -81,7 +81,7 @@ const UserDropdown = ({ user, initialStocks }: { user: User, initialStocks: Stoc
         {/* Mobile navigation menu */}
         <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
         <nav className="sm:hidden">
-          <NavItems initialStocks={initialStocks} />
+          <NavItems initialStocks={initialStocks} userEmail={user.email} watchlistSymbols={watchlistSymbols} />
         </nav>
       </DropdownMenuContent>
     </DropdownMenu>
