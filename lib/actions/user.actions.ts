@@ -12,9 +12,16 @@ export const getAllUsersForNewsEmail = async () => {
     const db = mongoose.connection.db;
     if (!db) throw new Error('Mongoose connection not connected.');
 
+    // Only include users that are subscribed (missing flag is treated as subscribed)
     const users = await db.collection('user')
       .find(
-        { email: { $exists: true, $ne: null } },
+        {
+          email: { $exists: true, $ne: null },
+          $or: [
+            { dailyEmailsSubscribed: { $exists: false } },
+            { dailyEmailsSubscribed: { $ne: false } }
+          ]
+        },
         { projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 } }
       ).toArray();
 
@@ -59,6 +66,35 @@ export const updateCountryForUserEmail = async (email: string, country: string) 
 
   } catch (e) {
     console.error('Error updating country for user email: ', e);
+    return { success: false, error: e instanceof Error ? e.message : 'Unknown error' } as const;
+  }
+}
+
+/**
+ * Update user's daily email subscription flag
+ */
+export const setDailyEmailsSubscription = async (email: string, subscribed: boolean) => {
+  try {
+    if (!email) throw new Error('Email is required.');
+
+    const mongoose = await connectToDatabase();
+    const db = mongoose.connection.db;
+    if (!db) throw new Error('Mongoose connection not connected.');
+
+    const result = await db.collection('user').updateOne(
+      { email },
+      { $set: { dailyEmailsSubscribed: subscribed } },
+      { upsert: false }
+    );
+
+    return {
+      success: result.matchedCount > 0,
+      matchedCount: result.matchedCount,
+      modifiedCount: result.modifiedCount,
+    } as const;
+
+  } catch (e) {
+    console.error('Error updating dailyEmailsSubscribed flag: ', e);
     return { success: false, error: e instanceof Error ? e.message : 'Unknown error' } as const;
   }
 }

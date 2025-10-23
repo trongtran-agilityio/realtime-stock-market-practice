@@ -160,7 +160,7 @@ Create a `.env` file in the root directory:
 env
 # App
 NODE_ENV=development
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
 # Database
 MONGODB_URI=mongodb://localhost:27017/stock-market-db

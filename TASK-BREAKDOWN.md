@@ -235,7 +235,7 @@ Notes:
 
 **Tasks:**
 
-* [ ] Implement `/api/unsubscribe` endpoint.
+* [ ] Implement unsubscribe action.
 * [ ] Add “Stop Daily Emails” link in every summary email.
 * [ ] Update user’s subscription flag in MongoDB.
 * [ ] Modify Inngest workflow to skip unsubscribed users.
