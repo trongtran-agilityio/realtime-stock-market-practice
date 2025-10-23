@@ -245,20 +245,22 @@ Notes:
 
 ---
 
-## **Phase 11 — Challenge: Watchlist CRUD 🎯**
+## **Phase 11 — Challenge: Watchlist page 🎯**
 
 **Time:** ~1 Day *(Optional)*
 
 **Tasks:**
 
-* [ ] Create `Watchlist` model in MongoDB.
-* [ ] API routes:
+* [x] Create Watchlist model in MongoDB.
+* [x] Use Next.js Server Actions (replace REST API):
+  * getWatchlistSymbolsByEmail(email)
+  * getWatchlistByEmail(email)
+  * addToWatchlist(email, symbol, company)
+  * removeFromWatchlist(email, symbol)
+  * toggleWatchlist(email, symbol, company)
 
-  * `POST /api/watchlist` → Add stock
-  * `GET /api/watchlist` → Get list
-  * `DELETE /api/watchlist/:id` → Remove
-* [ ] Build UI for managing watchlist in dashboard.
-* [ ] Show stock details with “Add to Watchlist” button.
+* [x] Build UI for managing watchlist in dashboard.
+* [x] Show stock details with “Add to Watchlist” button.
 
 ### ✅ Final Deliverable
 
