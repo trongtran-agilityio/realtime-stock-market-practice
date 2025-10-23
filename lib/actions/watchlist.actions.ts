@@ -44,7 +44,8 @@ export const getWatchlistSymbolsByEmail = async (email: string): Promise<string[
 };
 
 /**
- * Get full watchlist with fake metrics
+ * Get user's watchlist (no metrics)
+ * Returns only persistent fields from DB; UI will generate metrics per view.
  */
 export const getWatchlistByEmail = async (email: string) => {
   try {
@@ -55,10 +56,6 @@ export const getWatchlistByEmail = async (email: string) => {
       id: String(i._id),
       symbol: String(i.symbol),
       company: String(i.company),
-      price: typeof i.price === 'number' ? i.price : +(50 + Math.random() * 450).toFixed(2),
-      change: typeof i.change === 'number' ? i.change : +((-5 + Math.random() * 10).toFixed(2)),
-      marketCap: typeof i.marketCap === 'number' ? i.marketCap : Math.floor(1e9 + Math.random() * 999e9),
-      peRatio: typeof i.peRatio === 'number' ? i.peRatio : +(5 + Math.random() * 35).toFixed(2),
       addedAt: i.addedAt,
     }));
   } catch (e) {

@@ -7,8 +7,8 @@ import WatchlistTable, { type WatchlistRow } from "@/components/WatchlistTable";
  * Watchlist Page Component
  * Server Component that:
  * 1. Verifies user authentication
- * 2. Fetches user's watchlist
- * 3. Formats data for table display
+ * 2. Fetches user's watchlist (without metrics)
+ * 3. Generates fake metrics per render
  * 4. Renders watchlist with metrics
  */
 const WatchlistPage = async () => {
@@ -16,18 +16,18 @@ const WatchlistPage = async () => {
   const session = await auth.api.getSession({ headers: await headers() });
   const email = session?.user?.email as string;
 
-  // Fetch watchlist data with metrics
+  // Fetch watchlist data (no metrics)
   const list = await getWatchlistByEmail(email);
 
-  // Format data for table display, ensuring number types
+  // Generate random metrics for UI only
   const rows: WatchlistRow[] = list.map((i: any) => ({
     id: i.id || i._id || `${i.symbol}-${i.company}`,
     symbol: i.symbol,
     company: i.company,
-    price: Number(i.price ?? 0),
-    change: Number(i.change ?? 0),
-    marketCap: Number(i.marketCap ?? 0),
-    peRatio: Number(i.peRatio ?? 0),
+    price: +(50 + Math.random() * 450).toFixed(2),
+    change: +((-5 + Math.random() * 10).toFixed(2)),
+    marketCap: Math.floor(1e9 + Math.random() * 999e9),
+    peRatio: +(5 + Math.random() * 35).toFixed(2),
   }));
 
   return (
